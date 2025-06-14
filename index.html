@@ -74,7 +74,7 @@
   <div class="container text-center py-5">
     <i class="fas fa-robot fa-3x mb-3"></i>
     <h1 class="gradient-text mb-4">Divida sua grana como um bot 🤖</h1>
-    <p class="lead mb-4">Insira quanto você ganhou hoje e veja a divisão automática do seu dinheiro em segundos.</p>
+    <p class="lead mb-4">Insira quanto você ganhou hoje e veja a divisão automática com base na regra Cariny/Mateus.</p>
 
     <form id="calc-form" class="mb-5">
       <div class="mb-3">
@@ -96,20 +96,21 @@
       const valorTotal = parseFloat(document.getElementById('valorEntrada').value);
       if (isNaN(valorTotal) || valorTotal <= 0) return;
 
-      const reserva = valorTotal * 0.15;
+      const reserva = valorTotal * 0.15; // 15% para veículo/emergência
       const restante = valorTotal - reserva;
 
-      const cariny = restante * 0.15;
-      const mateus = restante * 0.85;
+      const cariny = restante * 0.15;   // 15% de 85% = 12,75%
+      const mateus = restante * 0.85;   // 85% de 85% = 72,25%
 
       const format = (v) => v.toFixed(2).replace('.', ',');
 
       const resultado = `
         <h2 class="gradient-text">Resultado da divisão</h2>
+        <p><strong>Regra aplicada:</strong> 15% reservado antes da divisão. Restante dividido entre Cariny (15%) e Mateus (85%).</p>
         <ul class="list-group list-group-flush mt-3">
-          <li class="list-group-item bg-transparent text-success">🚗 <strong>Reserva / Carro / Emergência (15%):</strong> R$ ${format(reserva)}</li>
-          <li class="list-group-item bg-transparent text-success">❤️ <strong>Cariny (15% de 85%):</strong> R$ ${format(cariny)}</li>
-          <li class="list-group-item bg-transparent text-success">🏠 <strong>Mateus (85% de 85%):</strong> R$ ${format(mateus)}</li>
+          <li class="list-group-item bg-transparent text-success">🚗 <strong>Reserva Veículo/Emergência (15%):</strong> R$ ${format(reserva)}</li>
+          <li class="list-group-item bg-transparent text-success">❤️ <strong>Cariny (15% dos 85%):</strong> R$ ${format(cariny)}</li>
+          <li class="list-group-item bg-transparent text-success">🏠 <strong>Mateus (85% dos 85%):</strong> R$ ${format(mateus)}</li>
         </ul>
       `;
 
